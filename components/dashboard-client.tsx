@@ -101,64 +101,73 @@ export default function DashboardClient({ initialEntries, userEmail }: { initial
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50">
+    <div className="flex flex-col min-h-screen bg-[#fcfbf9] font-sans selection:bg-slate-900 selection:text-white">
       {/* Sidebar / Topbar */}
-      <header className="bg-white border-b sticky top-0 z-10 px-4 py-3 sm:px-8 flex items-center justify-between shadow-sm">
+      <header className="bg-white/40 backdrop-blur-md border-b border-slate-100 sticky top-0 z-10 px-6 py-4 sm:px-12 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <BookOpen className="h-7 w-7 text-indigo-600" />
-          <h1 className="text-xl font-bold hidden sm:block">My Journal</h1>
+          <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center">
+            <span className="text-white font-anton text-sm pt-0.5">D</span>
+          </div>
+          <h1 className="text-xl font-anton uppercase tracking-tighter hidden sm:block">Daily Pulse</h1>
         </div>
         
-        <div className="flex-1 max-w-md mx-6 hidden md:block">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+        <div className="flex-1 max-w-md mx-10 hidden md:block">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300 group-focus-within:text-slate-900 transition-colors" />
             <input 
               type="text" 
-              placeholder="Search entries..." 
-              className="w-full pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
+              placeholder="Search your sanctuary..." 
+              className="w-full pl-12 pr-4 py-2.5 bg-slate-100/50 border-none rounded-full text-xs font-bold uppercase tracking-widest focus:ring-2 focus:ring-slate-900 transition-all outline-none placeholder:text-slate-300"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <span className="text-xs font-medium text-slate-500 hidden lg:block">{userEmail}</span>
+        <div className="flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{userEmail}</span>
+          </div>
           <button 
             onClick={handleLogout}
             disabled={isPending}
-            className="p-2 text-slate-500 hover:bg-slate-100 hover:text-red-600 rounded-full transition-colors disabled:opacity-50"
+            className="p-3 text-slate-400 hover:bg-slate-900 hover:text-white rounded-full transition-all disabled:opacity-50 active:scale-90"
             title="Logout"
           >
-            <LogOut className="h-5 w-5" />
+            <LogOut className="h-4 w-4" />
           </button>
         </div>
       </header>
 
-      <main className="flex-1 p-4 sm:p-8 max-w-6xl mx-auto w-full">
+      <main className="flex-1 p-6 sm:p-12 max-w-7xl mx-auto w-full space-y-12">
         {/* Dashboard Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Your Entries</h2>
-            <p className="text-slate-500">Capture your thoughts for today</p>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-8 border-b border-slate-100 pb-12">
+          <div className="space-y-4">
+            <div className="inline-block px-3 py-1 border border-slate-200 rounded-full text-[10px] uppercase tracking-widest font-bold text-slate-400">
+              Personal Vault
+            </div>
+            <h2 className="text-6xl font-anton uppercase tracking-tighter text-slate-900 leading-[0.85]">
+              Your <br /> <span className="text-slate-300">Pulse</span> Timeline.
+            </h2>
           </div>
           <button 
             onClick={openCreateModal}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-2xl font-semibold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-95"
+            className="flex items-center justify-center gap-3 px-8 py-5 bg-slate-900 text-white rounded-full font-anton text-xl uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 active:scale-95"
           >
-            <Plus className="h-5 w-5" />
-            New Entry
+            <Plus className="h-6 w-6" />
+            New Chapter
           </button>
         </div>
 
         {/* Mobile Search */}
-        <div className="mb-6 md:hidden">
+        <div className="mb-8 md:hidden">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search entries..." 
-              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none shadow-sm shadow-slate-100"
+              placeholder="Search..." 
+              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-100 rounded-[20px] text-xs font-bold uppercase tracking-widest focus:ring-2 focus:ring-slate-900 transition-all outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -166,60 +175,73 @@ export default function DashboardClient({ initialEntries, userEmail }: { initial
         </div>
 
         {/* Entries Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
             {filteredEntries.map((entry) => (
               <motion.div
                 key={entry.id}
                 layout
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-indigo-50 transition-all group flex flex-col min-h-[220px]"
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white p-10 rounded-[40px] border border-slate-50 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden group flex flex-col min-h-[300px] relative"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2 text-indigo-600">
-                    <Calendar className="h-4 w-4" />
-                    <span className="text-xs font-bold uppercase tracking-wider">{entry.date}</span>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <Calendar className="h-3 w-3" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{entry.date}</span>
                   </div>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all">
                     <button 
                       onClick={() => openEditModal(entry)}
-                      className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                      className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-colors"
                     >
-                      <Edit3 className="h-4 w-4" />
+                      <Edit3 className="h-3 w-3" />
                     </button>
                     <button 
                       onClick={() => handleDelete(entry.id)}
-                      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3 w-3" />
                     </button>
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-bold text-slate-900 mb-2 truncate group-hover:text-indigo-600 transition-colors">{entry.title}</h3>
-                <p className="text-slate-600 text-sm line-clamp-4 flex-1">{entry.content}</p>
+                <h3 className="text-3xl font-anton uppercase tracking-tight text-slate-900 mb-6 leading-[0.9] group-hover:text-slate-500 transition-colors">{entry.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed font-light line-clamp-4 flex-1">{entry.content}</p>
                 
-                <div className="mt-4 pt-4 border-t border-slate-50 flex items-center gap-2 text-slate-400">
-                  <Clock className="h-3 w-3" />
-                  <span className="text-[10px] uppercase font-bold tracking-widest italic font-mono">
-                    Created {entry.created_at?.split('T')[0]}
-                  </span>
+                <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <Clock className="h-3 w-3" />
+                    <span className="text-[9px] uppercase font-bold tracking-widest italic">
+                      Chapter Logged
+                    </span>
+                  </div>
+                  <div className="w-6 h-px bg-slate-100 group-hover:w-12 transition-all" />
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
 
           {filteredEntries.length === 0 && (
-            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center">
-              <div className="p-4 bg-indigo-50 rounded-full mb-4">
-                <BookOpen className="h-12 w-12 text-indigo-300" />
+            <div className="col-span-full py-32 flex flex-col items-center justify-center text-center space-y-8">
+              <div className="w-24 h-24 bg-slate-100 rounded-[40px] flex items-center justify-center">
+                <BookOpen className="h-10 w-10 text-slate-300" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">No entries found</h3>
-              <p className="text-slate-500">
-                {searchQuery ? "Try a different search term" : "Start your journal by creating your first entry!"}
-              </p>
+              <div className="space-y-4">
+                <h3 className="text-4xl font-anton uppercase tracking-tighter text-slate-900">Silence in the Sanctuary</h3>
+                <p className="text-slate-400 max-w-xs mx-auto font-light leading-relaxed">
+                  {searchQuery ? "Your search returned no echoes. Try a different memory." : "Your pulse timeline is empty. Every journey starts with a single reflection."}
+                </p>
+              </div>
+              {!searchQuery && (
+                <button 
+                  onClick={openCreateModal}
+                  className="px-10 py-4 border-2 border-slate-900 rounded-full font-anton text-lg uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-xl shadow-slate-100"
+                >
+                  Write your first chapter
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -234,78 +256,81 @@ export default function DashboardClient({ initialEntries, userEmail }: { initial
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" 
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" 
             />
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 40 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl relative z-10 overflow-hidden"
+              exit={{ opacity: 0, scale: 0.95, y: 40 }}
+              className="bg-white w-full max-w-3xl rounded-[40px] shadow-2xl relative z-10 overflow-hidden"
             >
-              <div className="p-6 border-b flex items-center justify-between bg-indigo-600">
-                <h3 className="text-xl font-bold text-white">
-                  {editingEntry ? 'Edit Entry' : 'New Journal Entry'}
+              <div className="p-10 border-b border-slate-50 flex items-center justify-between">
+                <h3 className="text-4xl font-anton uppercase tracking-tighter text-slate-900">
+                  {editingEntry ? 'Refine Memory' : 'Capture Pulse'}
                 </h3>
                 <button 
                   onClick={() => setIsModalOpen(false)}
-                  className="p-2 text-indigo-100 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                  className="p-3 text-slate-400 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-all active:scale-90"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6" />
                 </button>
               </div>
               
-              <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Title</label>
+              <form onSubmit={handleSubmit} className="p-10 space-y-10">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between px-4">
+                    <label className="text-[10px] uppercase font-bold tracking-[0.3em] text-slate-400">Chapter Title</label>
+                    <div className="text-[10px] uppercase font-bold tracking-widest text-slate-300">Required Selection</div>
+                  </div>
                   <input
                     name="title"
                     defaultValue={editingEntry?.title || ''}
-                    placeholder="Reflections on today..."
+                    placeholder="E.g., A Moment of Stillness"
                     required
-                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 transition-all outline-none text-lg font-semibold"
+                    className="w-full px-8 py-5 rounded-[25px] border-none bg-slate-50 focus:ring-2 focus:ring-slate-900 transition-all outline-none text-2xl font-anton uppercase tracking-tight placeholder:text-slate-200"
                   />
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Date</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                  <div className="space-y-4">
+                    <label className="text-[10px] uppercase font-bold tracking-[0.3em] text-slate-400 px-4">Timeline Hub</label>
                     <input
                       name="date"
                       type="date"
                       defaultValue={editingEntry?.date || new Date().toISOString().split('T')[0]}
                       required
-                      className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
+                      className="w-full px-8 py-5 rounded-[25px] border-none bg-slate-50 focus:ring-2 focus:ring-slate-900 transition-all outline-none font-bold text-slate-600"
                     />
                   </div>
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Content</label>
+                <div className="space-y-4">
+                  <label className="text-[10px] uppercase font-bold tracking-[0.3em] text-slate-400 px-4">The Inner Story</label>
                   <textarea
                     name="content"
                     defaultValue={editingEntry?.content || ''}
-                    placeholder="Write your thoughts here..."
+                    placeholder="Let your thoughts flow without judgment..."
                     required
                     rows={8}
-                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 transition-all outline-none resize-none leading-relaxed"
+                    className="w-full px-8 py-6 rounded-[30px] border-none bg-slate-50 focus:ring-2 focus:ring-slate-900 transition-all outline-none resize-none leading-loose text-slate-700 font-light"
                   />
                 </div>
                 
-                <div className="pt-4 flex justify-end gap-3">
+                <div className="pt-6 flex justify-end gap-6 items-center">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-6 py-3 text-slate-600 font-semibold hover:bg-slate-100 rounded-2xl transition-colors"
+                    className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 hover:text-slate-900 transition-colors"
                   >
-                    Cancel
+                    Discard Changes
                   </button>
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="px-8 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-95 disabled:opacity-50"
+                    className="px-12 py-5 bg-slate-900 text-white rounded-full font-anton text-xl uppercase tracking-widest hover:bg-slate-800 transition-all shadow-2xl shadow-slate-100 active:scale-95 disabled:opacity-50"
                   >
-                    {isPending ? 'Saving...' : (editingEntry ? 'Save Changes' : 'Save Entry')}
+                    {isPending ? 'Logging...' : (editingEntry ? 'Refine Pulse' : 'Capture Pulse')}
                   </button>
                 </div>
               </form>

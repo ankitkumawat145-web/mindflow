@@ -10,4 +10,18 @@ if (!process.env.NEXT_PUBLIC_SUPABASE_URL && !process.env.SUPABASE_URL) {
   console.warn('Supabase environment variables missing. Using hardcoded fallbacks.');
 }
 
+export function getSupabaseClient(token?: string) {
+  if (!token) {
+    return createClient(supabaseUrl, supabaseAnonKey);
+  }
+  
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    global: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

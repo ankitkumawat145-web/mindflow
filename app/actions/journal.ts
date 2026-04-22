@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/supabase';
 import { getSession } from '@/lib/auth';
 
 export async function createEntry(formData: FormData) {
@@ -12,6 +12,8 @@ export async function createEntry(formData: FormData) {
       console.error('Create Entry Failed: No session found');
       return { error: 'Unauthorized: Please log in again.' };
     }
+
+    const supabase = getSupabaseClient(session.token);
 
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
@@ -55,6 +57,8 @@ export async function updateEntry(id: string, formData: FormData) {
     const session = await getSession();
     if (!session) return { error: 'Unauthorized' };
 
+    const supabase = getSupabaseClient(session.token);
+
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
     const date = formData.get('date') as string;
@@ -83,6 +87,8 @@ export async function deleteEntry(id: string) {
     const session = await getSession();
     if (!session) return { error: 'Unauthorized' };
 
+    const supabase = getSupabaseClient(session.token);
+
     const { error } = await supabase
       .from('entries')
       .delete()
@@ -106,6 +112,8 @@ export async function getEntries() {
   try {
     const session = await getSession();
     if (!session) return [];
+
+    const supabase = getSupabaseClient(session.token);
 
     const { data, error } = await supabase
       .from('entries')

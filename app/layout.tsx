@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
+import { Outfit, Anton } from 'next/font/google';
 import './globals.css';
 
 const outfit = Outfit({
@@ -7,14 +7,20 @@ const outfit = Outfit({
   variable: '--font-outfit',
 });
 
+const anton = Anton({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-anton',
+});
+
 export const metadata: Metadata = {
   title: 'Daily Pulse | Your Personal Life Journal',
-  description: 'A beautiful and secure place for your daily thoughts.',
+  description: 'Daily Pulse is an immersive, creative journal experience designed to capture your thoughts in a beautiful, high-impact digital space.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} font-sans`}>
+    <html lang="en" className={`${outfit.variable} ${anton.variable} font-sans`}>
       <body suppressHydrationWarning className="bg-slate-50 text-slate-900 min-h-screen">
         {children}
       </body>
