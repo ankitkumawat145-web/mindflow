@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
-import { Loader2, ArrowLeft, Heart } from 'lucide-react';
+import { Loader2, ArrowLeft, Heart, ShieldCheck } from 'lucide-react';
 import { login } from '@/app/actions/auth';
 import { motion } from 'framer-motion';
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#fcfbf9] selection:bg-slate-900 selection:text-white">
+    <div className="min-h-screen flex selection:bg-slate-900 selection:text-white">
       {/* Visual Side */}
       <div className="hidden lg:flex w-1/2 bg-slate-900 relative overflow-hidden items-center justify-center p-24">
         <div className="relative z-10 space-y-12">
@@ -35,15 +35,21 @@ export default function LoginPage() {
             </div>
             <span className="text-white font-anton text-3xl tracking-tighter uppercase">Daily Pulse</span>
           </Link>
-          <h1 className="text-7xl font-anton uppercase text-white leading-tight tracking-tighter">
-            Welcome <br /> Back to <br /> your <span className="text-slate-500">Pulse.</span>
+          <h1 className="text-7xl font-anton uppercase text-white leading-[0.85] tracking-tighter">
+            Enter Your <br /> Personal <br /> <span className="text-white/20">Archive.</span>
           </h1>
           <p className="text-slate-400 text-xl font-light leading-relaxed max-w-md">
-            The sanctuary is open. Return to your thoughts and pick up exactly where you left off.
+            The sanctuary is open. Return to your sanctuary and pick up exactly where you left off.
           </p>
-          <div className="flex items-center gap-4 text-amber-400">
-            <Heart className="w-6 h-6 fill-current" />
-            <span className="text-xs font-bold uppercase tracking-widest">Your Private Space Awaits</span>
+          <div className="space-y-6">
+            <div className="flex items-center gap-4 text-emerald-400">
+              <ShieldCheck className="w-6 h-6" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Sovereign Privacy Active</span>
+            </div>
+            <div className="flex items-center gap-4 text-white/40">
+              <Heart className="w-6 h-6" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Crafted by Ankit Kumawat</span>
+            </div>
           </div>
         </div>
         
@@ -56,21 +62,31 @@ export default function LoginPage() {
       </div>
 
       {/* Form Side */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16 relative bg-[#fcfbf9]">
+        {/* Mobile Logo */}
+        <div className="lg:hidden absolute top-10 left-8">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center">
+              <span className="text-white font-anton text-sm pt-0.5">D</span>
+            </div>
+            <span className="font-anton text-xl tracking-tighter uppercase">Daily Pulse</span>
+          </Link>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="max-w-md w-full space-y-10"
         >
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors group text-xs font-bold uppercase tracking-widest">
+            <Link href="/" className="hidden lg:flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors group text-xs font-bold uppercase tracking-widest">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Sanctuary
             </Link>
-            <h2 className="text-5xl font-anton uppercase tracking-tighter text-slate-900">
-              Reconnect
+            <h2 className="text-4xl md:text-5xl font-anton uppercase tracking-tighter text-slate-900">
+              Welcome Back.
             </h2>
-            <p className="text-slate-500 font-light">
-              Sign in to access your secure journal vault.
+            <p className="text-slate-400 md:text-slate-500 font-light">
+              Reconnect with your inner dialogue. Your secure vault awaits.
             </p>
           </div>
           
